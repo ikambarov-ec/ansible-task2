@@ -1,0 +1,35 @@
+# 1. Yum install htttpd
+- name: Install Apache on RedHat
+  yum:
+    name: httpd
+    state: latest
+
+# 2.  Systemctl start/enable httpd
+- name: Start Apache on RedHat
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+# 3. Install wget unzip on RedHat
+- name: Install wget and unzip
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - wget
+    - unzip
+
+# 5. unzip koppee.zip
+- name: Download and extract Template on RedHat
+  unarchive:
+    src: https://www.free-css.com/assets/files/free-css-templates/download/page281/koppee.zip
+    dest: /tmp/
+    remote_src: yes
+
+# 6. Copy file to /var/www/html on RedHat
+- name: Copy a "sudoers" file on the remote machine for editing
+  copy:
+    src: /tmp/coffee-shop-html-template/
+    dest: /var/www/html/
+    remote_src: yes

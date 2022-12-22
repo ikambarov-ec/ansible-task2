@@ -1,0 +1,35 @@
+# 1. Yum install htttpd
+- name: Install Apache on Debian
+  apt:
+    name: apache2
+    state: latest
+
+# 2.  Systemctl start/enable httpd
+- name: Start Apache on Debian
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+
+# 3. Install wget unzip on Debian
+- name: Install wget and unzip
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - wget
+    - unzip
+
+# 5. unzip koppee.zip
+- name: Download and extract Template on Debian
+  unarchive:
+    src: https://www.free-css.com/assets/files/free-css-templates/download/page281/koppee.zip
+    dest: /tmp/
+    remote_src: yes
+
+# 6. Copy file to /var/www/html on Debian
+- name: Copy a "sudoers" file on the remote machine for editing
+  copy:
+    src: /tmp/coffee-shop-html-template/
+    dest: /var/www/html/
+    remote_src: yes
